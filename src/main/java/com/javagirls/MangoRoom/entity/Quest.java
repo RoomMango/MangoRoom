@@ -30,5 +30,15 @@ public class Quest {
     private String city;
     private String country;
 
+    public int getAddressNumber() {
+        return addressNumber;
+    }
 
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }

@@ -24,4 +24,5 @@ public class Room {
     private int number;
     private int beds;
     private BigDecimal price;
+
 }

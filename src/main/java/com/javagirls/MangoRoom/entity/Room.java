@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -24,4 +21,16 @@ public class Room {
     private int number;
     private int beds;
     private BigDecimal price;
+    @OneToOne
+    private Reservation reservation;
+
+    private Balcony balcony;
+    private View view;
+
+    public static enum Balcony{
+        YES, NO;
+    }
+    public static enum View{
+        STREET, GARDEN
+    }
 }

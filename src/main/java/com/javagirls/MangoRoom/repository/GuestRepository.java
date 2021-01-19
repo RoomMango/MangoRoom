@@ -8,6 +8,6 @@ import java.util.List;
 public interface GuestRepository extends JpaRepository<Guest, Long> {
 
     List<Guest> findAllByFirstNameAndLastName (String firstName, String lastName);
-    Guest findAllByIdCardNumber (String idCardNumber);
+    Guest findByIdCardNumber(String idCardNumber);
 
 }

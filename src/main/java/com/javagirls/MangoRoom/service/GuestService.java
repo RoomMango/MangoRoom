@@ -5,9 +5,11 @@ import com.javagirls.MangoRoom.errors.GuestExistException;
 import com.javagirls.MangoRoom.errors.NoGuestFoundException;
 import com.javagirls.MangoRoom.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GuestService {
 
     private final GuestRepository guestRepository;
@@ -39,12 +41,23 @@ public class GuestService {
                 });
     }
 
-    public List<Guest> findByFirstNameAndLastName (String firstName, String lastName) {
+    public List<Guest> findByFirstNameAndLastName(String firstName, String lastName) {
         return guestRepository.findAllByFirstNameAndLastName(firstName, lastName);
     }
 
-    public Guest findByIdCardNumber (String idCardNumber) {
-        return guestRepository.findAllByIdCardNumber(idCardNumber);
+    public Guest findByIdCardNumber(String idCardNumber) {
+        return guestRepository.findByIdCardNumber(idCardNumber);
     }
 
+
+    public Guest update(Long id, String field, String updatedValue) {
+        Guest guestToUpdate = findById(id);
+        //TODO
+        return null;
+    }
+
+    public void remove(Long id) {
+        Guest guestToRemove = findById(id);
+        guestRepository.delete(guestToRemove);
+    }
 }

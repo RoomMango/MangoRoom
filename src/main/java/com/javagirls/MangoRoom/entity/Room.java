@@ -1,5 +1,6 @@
 package com.javagirls.MangoRoom.entity;
 
+import com.javagirls.MangoRoom.enumeration.RoomType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,5 +40,8 @@ public class Room {
     private boolean balcony;
 
     @Column(name = "is_clean")
-    boolean isClean;
+    private boolean isClean;
+
+    @Column(name = "room_type")
+    private RoomType roomType;
 }

@@ -6,6 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,22 +19,25 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Table(name = "room")
 public class Room {
+
     @Id
-    @GeneratedValue
-    private String id;
-    private int number;
+    private Integer number;
+
+    @Min(1)
+    @Max(5)
     private int beds;
+
+    @Column(name = "extra_bed_available")
+    private boolean extraBedAvailable;
+
+    @NotBlank
     private BigDecimal price;
+
     @OneToOne
     private Reservation reservation;
 
-    private Balcony balcony;
-    private View view;
+    private boolean balcony;
 
-    public static enum Balcony{
-        YES, NO;
-    }
-    public static enum View{
-        STREET, GARDEN
-    }
+    @Column(name = "is_clean")
+    boolean isClean;
 }

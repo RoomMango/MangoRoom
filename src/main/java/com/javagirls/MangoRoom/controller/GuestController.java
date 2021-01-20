@@ -1,5 +1,10 @@
 package com.javagirls.MangoRoom.controller;
 
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class GuestController {
+
 import com.javagirls.MangoRoom.entity.Guest;
 import com.javagirls.MangoRoom.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;

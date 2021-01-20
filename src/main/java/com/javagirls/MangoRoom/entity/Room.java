@@ -34,9 +34,6 @@ public class Room {
     @NotBlank
     private BigDecimal price;
 
-    @OneToOne
-    private Reservation reservation;
-
     private boolean balcony;
 
     @Column(name = "is_clean")
@@ -44,4 +41,8 @@ public class Room {
 
     @Column(name = "room_type")
     private RoomType roomType;
+
+
+    @OneToOne
+    private Reservation reservation;
 }

@@ -8,12 +8,12 @@ Project build by 5 girls passionate about programming, who would like to start w
 
 ## Relationships in MangoRoom database
 
-![diagram](105071158-80526b00-5a84-11eb-829e-c55e8b1a5ca8.png)
+![diagram](https://user-images.githubusercontent.com/55435936/105202242-0f718880-5b42-11eb-9296-521374c76da0.png)
 
 ## Authors
 
 - **Anna Postek** - [LinkedIn Profile](https://www.linkedin.com/in/anna-postek/)
-- **Anna ...** - [LinkedIn Profile](https://www.linkedin.com/in/anna-postek/)
+- **Anna Rogiewicz** - [LinkedIn Profile](https://www.linkedin.com/in/anna-rogiewicz-2b9b13100/)
 - **Barbara Tyndorf** - [LinkedIn Profile](https://www.linkedin.com/in/barbara-tyndorf/)
 - **Dong Ha Kotwa** - [LinkedIn Profile](https://www.linkedin.com/in/dh-kotwa/)
 - **Paulina Kubiak** - [LinkedIn Profile](https://www.linkedin.com/in/paulina-ewa-kubiak/)

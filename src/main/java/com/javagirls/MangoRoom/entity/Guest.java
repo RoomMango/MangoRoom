@@ -40,7 +40,7 @@ public class Guest {
     String street;
 
     @Column(name = "number")
-    Integer number;
+    String number;
 
     @NotBlank
     @Size(min = 2)

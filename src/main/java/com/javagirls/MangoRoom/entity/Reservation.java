@@ -23,7 +23,10 @@ public class Reservation {
 
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
+    private Integer numberOfPeople;
     private PaymentCurrency paymentCurrency;
+    private Boolean businessTrip;
+    private Boolean paid;
 
     @OneToMany
     private List<Room> rooms;

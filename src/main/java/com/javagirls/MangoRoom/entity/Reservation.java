@@ -1,5 +1,6 @@
 package com.javagirls.MangoRoom.entity;
 
+import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,12 +23,8 @@ public class Reservation {
 
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
-    private Currency currency;
+    private PaymentCurrency paymentCurrency;
 
     @OneToMany
     private List<Room> rooms;
-
-    public static enum Currency {
-        PLN, EUR
-    }
 }

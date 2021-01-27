@@ -20,7 +20,6 @@ public class GuestService {
     }
 
     public Guest add(Guest guest) {
-
         guestRepository.findAll().stream()
                 .filter((Guest g) -> g.getIdCardNumber().equals(guest.getIdCardNumber()))
                 .findAny()

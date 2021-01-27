@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,13 +22,21 @@ public class Reservation {
     @GeneratedValue
     private String id;
 
+    @NotBlank
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
+    @NotBlank
     private Integer numberOfPeople;
+    @Enumerated(EnumType.ORDINAL)
+    @NotBlank
     private PaymentCurrency paymentCurrency;
+    @NotBlank
     private Boolean businessTrip;
+    @NotBlank
     private Boolean paid;
 
     @OneToMany
     private List<Room> rooms;
+
+
 }

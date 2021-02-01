@@ -1,10 +1,7 @@
 package com.javagirls.MangoRoom.entity;
 
 import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,22 +14,35 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Reservation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @NotBlank
+    @Column
     private LocalDateTime checkIn;
-    private LocalDateTime checkOut;
+
     @NotBlank
+    @Column
+    private LocalDateTime checkOut;
+
+    @NotBlank
+    @Column
     private Integer numberOfPeople;
+
     @Enumerated(EnumType.ORDINAL)
     @NotBlank
     private PaymentCurrency paymentCurrency;
+
     @NotBlank
+    @Column
     private Boolean businessTrip;
+
     @NotBlank
+    @Column
     private Boolean paid;
 
     @OneToMany

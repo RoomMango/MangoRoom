@@ -17,31 +17,26 @@ import java.util.List;
 @Getter
 @Setter
 public class Reservation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
-    @NotBlank
     @Column
     private LocalDateTime checkIn;
 
-    @NotBlank
     @Column
     private LocalDateTime checkOut;
 
-    @NotBlank
     @Column
     private Integer numberOfPeople;
 
     @Enumerated(EnumType.ORDINAL)
-    @NotBlank
     private PaymentCurrency paymentCurrency;
 
-    @NotBlank
     @Column
     private Boolean businessTrip;
 
-    @NotBlank
     @Column
     private Boolean paid;
 

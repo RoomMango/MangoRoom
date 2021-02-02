@@ -12,7 +12,7 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    void saveReservation(){
-        reservationRepository.save();
+    protected void saveReservation() {
+
     }
 }

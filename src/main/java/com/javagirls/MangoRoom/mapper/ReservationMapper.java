@@ -11,7 +11,6 @@ public class ReservationMapper extends ConfigurableMapper {
 
     protected void configure(MapperFactory factory){
         factory.classMap(Reservation.class, ReservationDto.class)
-                .field("checkIn", "checkOut")
                 .byDefault()
                 .register();
     }

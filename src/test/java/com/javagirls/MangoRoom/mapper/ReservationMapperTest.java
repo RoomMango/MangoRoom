@@ -4,9 +4,8 @@ import com.javagirls.MangoRoom.dto.ReservationDto;
 import com.javagirls.MangoRoom.entity.Reservation;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
-import static com.javagirls.MangoRoom.ReservationMock.getBasicReservation;
+import static com.javagirls.MangoRoom.mock.ReservationDtoMock.getBasicReservationDto;
+import static com.javagirls.MangoRoom.mock.ReservationMock.getBasicReservation;
 
 public class ReservationMapperTest {
 
@@ -27,15 +26,12 @@ public class ReservationMapperTest {
     public void shouldMapReservationDtoToReservation(){
 
         ReservationMapper reservationMapper = new ReservationMapper();
+        ReservationDto reservationDto = getBasicReservationDto();
 
-        ReservationDto reservationDto = new ReservationDto();
-        reservationDto.setId(1L);
-        reservationDto.setCheckIn(LocalDateTime.of(2021, 3, 13, 15, 0));
-        reservationDto.setCheckOut(LocalDateTime.of(2021, 3, 16, 12, 0));
-        reservationDto.setPaid(true);
-
-        Reservation reservation = reservationMapper.map(reservationDto, Reservation.class);
+        final Reservation reservation = reservationMapper.map(reservationDto, Reservation.class);
 
         assert(reservationDto.getId().equals(reservation.getId()));
+        assert(reservationDto.getCheckIn().equals(reservation.getCheckIn()));
+        assert(reservationDto.getCheckOut().equals(reservation.getCheckOut()));
     }
 }

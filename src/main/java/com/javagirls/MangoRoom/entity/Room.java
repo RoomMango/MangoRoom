@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 public class Room {
 
     @Id
-    private Integer number;
+    private Integer roomNumber;
 
     @Min(1)
     @Max(5)
@@ -45,4 +45,6 @@ public class Room {
 
     @OneToOne
     private Reservation reservation;
+
+    private boolean roomStatus;
 }

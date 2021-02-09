@@ -11,4 +11,8 @@ public class ReservationService {
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
+
+    protected void saveReservation() {
+
+    }
 }

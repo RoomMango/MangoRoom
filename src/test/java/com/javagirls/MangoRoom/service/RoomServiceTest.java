@@ -4,7 +4,6 @@ import com.javagirls.MangoRoom.dto.RoomDTO;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.repository.RoomRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +34,16 @@ class RoomServiceTest {
         when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
         RoomDTO roomDTO = service.changeRoomStatus(room.getRoomNumber());
         Assertions.assertThat(roomDTO.isAvailableForBooking()).isEqualTo(false);
+    }
+
+    @Test
+    void changeRoomStatus_fromFalseToTrue() {
+        Room room = new Room();
+        room.setRoomNumber(23);
+        room.setAvailableForBooking(false);
+        room.setPrice(new BigDecimal(200.00));
+        when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
+        RoomDTO roomDTO = service.changeRoomStatus(room.getRoomNumber());
+        Assertions.assertThat(roomDTO.isAvailableForBooking()).isEqualTo(true);
     }
 }

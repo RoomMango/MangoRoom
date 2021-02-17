@@ -24,6 +24,7 @@ public class RoomService {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("This room is not found"));
         room.setAvailableForBooking(!room.isAvailableForBooking());
+        roomRepository.save(room);
         return mapper.map(room, RoomDTO.class);
     }
 }

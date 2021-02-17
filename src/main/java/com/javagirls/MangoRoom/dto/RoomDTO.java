@@ -25,5 +25,5 @@ public class RoomDTO {
     private BigDecimal price;
     private boolean balcony;
     private RoomType roomType;
-    private boolean roomStatus;
+    private boolean isAvailableForBooking;
 }

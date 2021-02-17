@@ -1,4 +1,4 @@
-package com.javagirls.MangoRoom.errors;
+package com.javagirls.MangoRoom.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

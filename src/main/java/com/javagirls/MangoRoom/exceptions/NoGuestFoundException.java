@@ -1,4 +1,4 @@
-package com.javagirls.MangoRoom.errors;
+package com.javagirls.MangoRoom.exceptions;
 
 public class NoGuestFoundException extends RuntimeException {
 

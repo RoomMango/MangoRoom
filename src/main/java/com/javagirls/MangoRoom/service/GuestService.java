@@ -1,8 +1,8 @@
 package com.javagirls.MangoRoom.service;
 
 import com.javagirls.MangoRoom.entity.Guest;
-import com.javagirls.MangoRoom.errors.GuestExistException;
-import com.javagirls.MangoRoom.errors.NoGuestFoundException;
+import com.javagirls.MangoRoom.exceptions.GuestExistException;
+import com.javagirls.MangoRoom.exceptions.NoGuestFoundException;
 import com.javagirls.MangoRoom.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

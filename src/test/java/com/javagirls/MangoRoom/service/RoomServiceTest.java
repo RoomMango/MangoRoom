@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 
+import static org.mockito.Mockito.when;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class RoomServiceTest {
@@ -24,21 +26,14 @@ class RoomServiceTest {
     @Autowired
     private RoomService service;
 
-
-    @Before
-    public void setUp() {
+    @Test
+    void changeRoomStatus_fromTrueToFalse() {
         Room room = new Room();
         room.setRoomNumber(23);
         room.setRoomStatus(true);
         room.setPrice(new BigDecimal(200.00));
-repository.save(room);
-
-    }
-
-    @Test
-    void changeRoomStatus() {
-        int id = 23;
-        RoomDTO roomDTO = service.changeRoomStatus(id);
+        when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
+        RoomDTO roomDTO = service.changeRoomStatus(room.getRoomNumber());
         Assertions.assertThat(roomDTO.isRoomStatus()).isEqualTo(false);
     }
 }

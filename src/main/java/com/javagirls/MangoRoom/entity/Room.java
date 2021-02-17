@@ -41,5 +41,5 @@ public class Room {
     @OneToOne
     private Reservation reservation;
 
-    private boolean roomStatus;
+    private boolean isAvailableForBooking;
 }

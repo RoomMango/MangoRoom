@@ -30,7 +30,7 @@ class RoomServiceTest {
     void changeRoomStatus_fromTrueToFalse() {
         Room room = new Room();
         room.setRoomNumber(23);
-        room.setRoomStatus(true);
+        room.setAvailableForBooking(true);
         room.setPrice(new BigDecimal(200.00));
         when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
         RoomDTO roomDTO = service.changeRoomStatus(room.getRoomNumber());

@@ -1,22 +1,30 @@
 package com.javagirls.MangoRoom.service;
 
-import com.javagirls.MangoRoom.entity.Reservation;
+import com.javagirls.MangoRoom.dto.RoomDTO;
 import com.javagirls.MangoRoom.entity.Room;
+import com.javagirls.MangoRoom.mapper.RoomMapper;
 import com.javagirls.MangoRoom.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 @Service
+@AllArgsConstructor
 public class RoomService {
 
     private RoomRepository roomRepository;
+    private RoomMapper mapper;
 
-    @Autowired
-    public RoomService(RoomRepository repository) {
-        this.roomRepository = repository;
-    }
 
     public void save(Room room) {
         roomRepository.save(room);
+    }
+
+    public RoomDTO changeRoomStatus(int id) {
+        Room room = roomRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("This room is not found"));
+        room.setAvailableForBooking(!room.isAvailableForBooking());
+        roomRepository.save(room);
+        return mapper.map(room, RoomDTO.class);
     }
 }

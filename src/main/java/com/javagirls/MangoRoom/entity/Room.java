@@ -22,16 +22,11 @@ import java.math.BigDecimal;
 public class Room {
 
     @Id
-    private Integer number;
-
-    @Min(1)
-    @Max(5)
+    private int roomNumber;
     private int beds;
 
     @Column(name = "extra_bed_available")
     private boolean extraBedAvailable;
-
-    @NotBlank
     private BigDecimal price;
 
     private boolean balcony;
@@ -45,4 +40,6 @@ public class Room {
 
     @OneToOne
     private Reservation reservation;
+
+    private boolean isAvailableForBooking;
 }

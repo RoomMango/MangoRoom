@@ -7,6 +7,7 @@ import com.javagirls.MangoRoom.repository.RoomRepository;
 import lombok.AllArgsConstructor;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,9 +23,10 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
-    public void saveRoom(RoomDto roomDto) {
+    @Transactional
+    public Room saveRoom(RoomDto roomDto) {
         Room room = mapper.map(roomDto, Room.class);
-        roomRepository.save(room);
+        return roomRepository.save(room);
 
     }
 

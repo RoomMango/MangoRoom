@@ -3,11 +3,7 @@ package com.javagirls.MangoRoom.controller;
 import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.service.RoomService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,13 +22,13 @@ public class RoomController {
     }
 
     @PostMapping("/room")
-    public void addRoom(RoomDto room) {
-       service.saveRoom(room);
+    public Room addRoom(@RequestBody RoomDto room) {
+       return service.saveRoom(room);
     }
 
-    @PutMapping("/room")
-    public RoomDto exclusionRoomFromBooking(RoomDto room) {
-        return service.changeRoomStatus(room.getRoomNumber());
+    @PutMapping("/room/{id}")
+    public RoomDto exclusionRoomFromBooking(@PathVariable int id) {
+        return service.changeRoomStatus(id);
     }
 
 }

@@ -13,7 +13,9 @@ public class RoomMapper extends ConfigurableMapper {
         factory.classMap(Room.class, RoomDto.class)
                 .byDefault()
                 .register();
-
+        factory.classMap(RoomDto.class, Room.class)
+                .byDefault()
+                .register();
     }
 
 }

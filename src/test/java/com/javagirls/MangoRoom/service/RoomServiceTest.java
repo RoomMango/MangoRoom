@@ -2,21 +2,17 @@ package com.javagirls.MangoRoom.service;
 
 import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Room;
-import com.javagirls.MangoRoom.mapper.RoomMapper;
 import com.javagirls.MangoRoom.repository.RoomRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 class RoomServiceTest {
 

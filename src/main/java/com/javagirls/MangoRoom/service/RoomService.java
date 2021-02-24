@@ -5,7 +5,10 @@ import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.mapper.RoomMapper;
 import com.javagirls.MangoRoom.repository.RoomRepository;
 import lombok.AllArgsConstructor;
+import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -15,11 +18,14 @@ public class RoomService {
     private RoomRepository roomRepository;
     private RoomMapper mapper;
 
+    public List<Room> findAllRooms() {
+        return roomRepository.findAll();
+    }
 
-    public Room saveRoom(RoomDto roomDto) {
+    public void saveRoom(RoomDto roomDto) {
         Room room = mapper.map(roomDto, Room.class);
-        Room save = roomRepository.save(room);
-        return save;
+        roomRepository.save(room);
+
     }
 
     public RoomDto changeRoomStatus(int id) {

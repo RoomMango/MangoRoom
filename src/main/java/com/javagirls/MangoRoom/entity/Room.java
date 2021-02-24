@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 public class Room {
 
     @Id
+    @GeneratedValue()
     private int roomNumber;
     private int beds;
 

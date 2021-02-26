@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomDTO {
+public class RoomDto {
 
     private int roomNumber;
     @Min(1)

@@ -2,6 +2,8 @@ package com.javagirls.MangoRoom.service;
 
 import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Room;
+import com.javagirls.MangoRoom.mapper.RoomMapper;
+import com.javagirls.MangoRoom.mock.RoomDtoMock;
 import com.javagirls.MangoRoom.mock.RoomMock;
 import com.javagirls.MangoRoom.repository.RoomRepository;
 import org.junit.jupiter.api.Test;
@@ -14,9 +16,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -52,11 +56,18 @@ class RoomServiceTest {
 
     @Test
     void findAllRooms_should_return_roomDto_list() {
+        // given
         Room room1 = RoomMock.getBasicRoom();
         Room room2 = RoomMock.getBasicRoom();
-        repository.saveAll(Arrays.asList(room1, room2));
-        List<RoomDto> list = new ArrayList<>();
-        assertEquals(list.getClass(), service.findAllRooms().getClass());
+        List<Room> roomsMock = Arrays.asList(room1, room2);
 
+        when(repository.findAll()).thenReturn(roomsMock);
+
+        // when
+        List<RoomDto> roomDtos =  service.findAllRooms();
+
+        // then
+        assertNotNull(roomDtos);
+        assertEquals(roomsMock.size(), roomDtos.size());
     }
 }

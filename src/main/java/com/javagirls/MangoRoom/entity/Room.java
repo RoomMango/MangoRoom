@@ -37,8 +37,7 @@ public class Room {
     @Column(name = "room_type")
     private RoomType roomType;
 
-
-    @OneToOne
+    @ManyToOne
     private Reservation reservation;
 
     private boolean isAvailableForBooking;

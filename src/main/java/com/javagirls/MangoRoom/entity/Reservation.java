@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -37,8 +36,10 @@ public class Reservation {
     @Column
     private Boolean paid;
 
-    @OneToMany
-    private List<Room> rooms;
+    private Status status;
+
+    @ManyToOne
+    private Room room;
 
 
 }

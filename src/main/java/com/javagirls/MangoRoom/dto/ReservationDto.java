@@ -1,6 +1,7 @@
 package com.javagirls.MangoRoom.dto;
 
 import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
+import com.javagirls.MangoRoom.enumeration.Status;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

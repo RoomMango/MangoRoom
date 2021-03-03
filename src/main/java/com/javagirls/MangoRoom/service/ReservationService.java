@@ -3,6 +3,7 @@ package com.javagirls.MangoRoom.service;
 import com.javagirls.MangoRoom.dto.ReservationDto;
 import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.entity.Room;
+import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
 import com.javagirls.MangoRoom.repository.RoomRepository;
@@ -39,9 +40,13 @@ public class ReservationService {
 
     private Reservation findById(Long id) {
         return reservationRepository.findById(id).orElseThrow(() -> {
+            //fixme czy lepiej własne wyjątki?
             throw new NoSuchElementException("No reservation with provided id found!");
         });
     }
 
+    public void changeReservationStatus(Long id, Status status) {
+        findById(id).setStatus(status);
+    }
 
 }

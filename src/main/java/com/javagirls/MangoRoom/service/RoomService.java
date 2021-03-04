@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +19,11 @@ public class RoomService {
     private RoomRepository roomRepository;
     private RoomMapper mapper;
 
-    public List<Room> findAllRooms() {
-        return roomRepository.findAll();
+    @Transactional
+    public List<RoomDto> findAllRooms() {
+        List<Room> roomsEntity = roomRepository.findAll();
+        return roomsEntity.stream()
+                .map((room) -> mapper.map(room, RoomDto.class)).collect(Collectors.toList());
     }
 
     @Transactional

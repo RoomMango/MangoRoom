@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/rooms")
 public class RoomController {
 
     private RoomService service;
@@ -17,22 +18,22 @@ public class RoomController {
         this.service = service;
     }
 
-    @GetMapping("/rooms")
+    @GetMapping
     public List<RoomDto> getAllRooms() {
        return service.findAllRooms();
     }
 
-    @PostMapping("/room")
+    @PostMapping
     public Room addRoom(@RequestBody RoomDto room) {
        return service.saveRoom(room);
     }
 
-    @PutMapping("/room/{id}")
+    @PutMapping("/{id}")
     public RoomDto exclusionRoomFromBooking(@PathVariable int id) {
         return service.changeRoomStatus(id);
     }
 
-    @GetMapping("/room/{id}/reservations")
+    @GetMapping("/{id}/reservations")
     public List<ReservationDto> getRoomReservationPlan(@PathVariable int id) {
         return service.getReservations(id);
     }

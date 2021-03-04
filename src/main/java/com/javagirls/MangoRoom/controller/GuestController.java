@@ -14,7 +14,6 @@ public class GuestController {
 
     private final GuestService guestService;
 
-    @Autowired
     public GuestController(GuestService guestService) {
         this.guestService = guestService;
     }

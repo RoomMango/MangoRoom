@@ -1,5 +1,6 @@
 package com.javagirls.MangoRoom.controller;
 
+import com.javagirls.MangoRoom.dto.ReservationDto;
 import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.service.RoomService;
@@ -31,4 +32,8 @@ public class RoomController {
         return service.changeRoomStatus(id);
     }
 
+    @GetMapping("/room/{id}/reservations")
+    public List<ReservationDto> getRoomReservationPlan(@PathVariable int id) {
+        return service.getReservations(id);
+    }
 }

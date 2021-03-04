@@ -10,9 +10,6 @@ import java.time.LocalDateTime;
 public class ReservationDto {
 
     @NotBlank
-    private Long id;
-
-    @NotBlank
     private LocalDateTime checkIn;
 
     @NotBlank
@@ -29,4 +26,6 @@ public class ReservationDto {
 
     @NotBlank
     private Boolean paid;
+
+    private Status status;
 }

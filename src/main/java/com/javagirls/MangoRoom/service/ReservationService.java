@@ -7,6 +7,7 @@ import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
 import com.javagirls.MangoRoom.repository.RoomRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +22,12 @@ public class ReservationService {
     private ReservationMapper mapper;
     private RoomRepository roomRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository, ReservationMapper mapper, RoomRepository roomRepository) {
         this.reservationRepository = reservationRepository;
+        this.mapper = mapper;
+        this.roomRepository = roomRepository;
     }
-    
+
     @Transactional
     public Reservation saveReservation(ReservationDto reservationDto) {
         Reservation reservation = mapper.map(reservationDto, Reservation.class);
@@ -49,4 +52,32 @@ public class ReservationService {
         findById(id).setStatus(status);
     }
 
+    @Transactional
+    public void deleteReservation(ReservationDto reservationDtoDelete) {
+
+        Reservation delete = mapper.map(reservationDtoDelete, Reservation.class);
+        reservationRepository.deleteById(delete.getId());
+
+    }
+
+    public void editReservation(Long id, ReservationDto reservationDtoChange) {
+
+        Reservation editChange = mapper.map(reservationDtoChange, Reservation.class);
+
+        Reservation repositoryOne = reservationRepository.getOne(id);
+        repositoryOne.setBusinessTrip(editChange.getBusinessTrip());
+        repositoryOne.setCheckIn(editChange.getCheckIn());
+        repositoryOne.setCheckOut(editChange.getCheckOut());
+        repositoryOne.setNumberOfPeople(editChange.getNumberOfPeople());
+        repositoryOne.setPaid(editChange.getPaid());
+        repositoryOne.setPaymentCurrency(editChange.getPaymentCurrency());
+        repositoryOne.setRoom(editChange.getRoom());
+        reservationRepository.save(editChange);
+
+    }
+
+    public List<Reservation> findAllReservation() {
+        return reservationRepository.findAll();
+
+    }
 }

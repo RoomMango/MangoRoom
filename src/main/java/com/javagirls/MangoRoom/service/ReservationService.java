@@ -6,10 +6,11 @@ import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
-import com.javagirls.MangoRoom.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -19,12 +20,13 @@ public class ReservationService {
 
     private ReservationRepository reservationRepository;
     private ReservationMapper mapper;
-    private RoomRepository roomRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+
+    public ReservationService(ReservationRepository reservationRepository, ReservationMapper mapper) {
         this.reservationRepository = reservationRepository;
+        this.mapper = mapper;
     }
-    
+
     @Transactional
     public Reservation saveReservation(ReservationDto reservationDto) {
         Reservation reservation = mapper.map(reservationDto, Reservation.class);
@@ -49,4 +51,44 @@ public class ReservationService {
         findById(id).setStatus(status);
     }
 
-}
+    public List<ReservationDto> findAllWithTime(String time) {
+        List<ReservationDto> allReservationsDto = reservationRepository.findAll().stream()
+                .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
+        List<ReservationDto> result = new ArrayList<>();
+        if (time == null) {
+            time="future";
+            }
+            switch (time) {
+                case "all":
+                    for (ReservationDto reservationDto : allReservationsDto) {
+                        result.add(reservationDto);
+                    }
+                    break;
+                case "future":
+                    for (ReservationDto reservationDto : allReservationsDto) {
+                        if (reservationDto.getCheckIn().isAfter(LocalDateTime.now()))
+                            result.add(reservationDto);
+                    }
+                    break;
+                case "past":
+                    for (ReservationDto reservationDto : allReservationsDto) {
+                        if (reservationDto.getCheckIn().isBefore(LocalDateTime.now()))
+                            result.add(reservationDto);
+                    }
+                    break;
+                case "now":
+                    for (ReservationDto reservationDto : allReservationsDto) {
+                        if (reservationDto.getCheckIn().equals(LocalDateTime.now()))
+                            result.add(reservationDto);
+                    }
+                    break;
+                default:
+                    for (ReservationDto reservationDto : allReservationsDto) {
+                        if (reservationDto.getCheckIn().equals(LocalDateTime.now())
+                                || reservationDto.getCheckIn().isAfter(LocalDateTime.now()))
+                            result.add(reservationDto);
+                    }
+            }
+return result;
+    }
+    }

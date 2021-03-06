@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 public class ReservationController {
 
     private ReservationService service;
@@ -29,5 +31,11 @@ public class ReservationController {
         return ResponseEntity.ok(message);
     }
 
+
+    @GetMapping("/reservations")
+    public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
+
+        return service.findAllWithTime(time);
+    }
 
 }

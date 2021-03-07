@@ -84,7 +84,7 @@ public class ReservationService {
     }
 
 
-    private List<ReservationDto> findAllReservationsDto() {
+    public List<ReservationDto> findAllReservationsDto() {
         return reservationRepository.findAll().stream()
                 .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
     }

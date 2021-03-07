@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.MonthDay;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -60,23 +62,23 @@ public class ReservationService {
                 break;
             case "future":
                 findAllReservationsDto().stream()
-                        .filter(reservationDto -> reservationDto.getCheckIn().isAfter(LocalDateTime.now()))
+                        .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS).isAfter(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
                         .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
                 break;
             case "past":
                 findAllReservationsDto().stream()
-                        .filter(reservationDto -> reservationDto.getCheckIn().isBefore(LocalDateTime.now()))
+                        .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS).isBefore(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
                         .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
                 break;
             case "now":
                 findAllReservationsDto().stream()
-                        .filter(reservationDto -> reservationDto.getCheckIn().equals(LocalDateTime.now()))
+                        .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS).equals(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
                         .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
                 break;
             default:
                 findAllReservationsDto().stream()
-                        .filter(reservationDto -> (reservationDto.getCheckIn().equals(LocalDateTime.now())
-                                || (reservationDto.getCheckIn().isAfter(LocalDateTime.now()))))
+                        .filter(reservationDto -> (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS).equals(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS))
+                                || (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS).isAfter(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))))
                         .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
                 break;
         }

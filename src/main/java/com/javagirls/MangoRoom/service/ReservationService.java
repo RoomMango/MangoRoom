@@ -52,43 +52,40 @@ public class ReservationService {
     }
 
     public List<ReservationDto> findAllWithTime(String time) {
-        List<ReservationDto> allReservationsDto = reservationRepository.findAll().stream()
-                .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
         List<ReservationDto> result = new ArrayList<>();
-        if (time == null) {
-            time="future";
-            }
-            switch (time) {
-                case "all":
-                    for (ReservationDto reservationDto : allReservationsDto) {
-                        result.add(reservationDto);
-                    }
-                    break;
-                case "future":
-                    for (ReservationDto reservationDto : allReservationsDto) {
-                        if (reservationDto.getCheckIn().isAfter(LocalDateTime.now()))
-                            result.add(reservationDto);
-                    }
-                    break;
-                case "past":
-                    for (ReservationDto reservationDto : allReservationsDto) {
-                        if (reservationDto.getCheckIn().isBefore(LocalDateTime.now()))
-                            result.add(reservationDto);
-                    }
-                    break;
-                case "now":
-                    for (ReservationDto reservationDto : allReservationsDto) {
-                        if (reservationDto.getCheckIn().equals(LocalDateTime.now()))
-                            result.add(reservationDto);
-                    }
-                    break;
-                default:
-                    for (ReservationDto reservationDto : allReservationsDto) {
-                        if (reservationDto.getCheckIn().equals(LocalDateTime.now())
-                                || reservationDto.getCheckIn().isAfter(LocalDateTime.now()))
-                            result.add(reservationDto);
-                    }
-            }
-return result;
+        switch (time) {
+            case "all":
+                findAllReservationsDto().stream().map(reservationDto -> result.add(reservationDto))
+                        .collect(Collectors.toList());
+                break;
+            case "future":
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> reservationDto.getCheckIn().isAfter(LocalDateTime.now()))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+            case "past":
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> reservationDto.getCheckIn().isBefore(LocalDateTime.now()))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+            case "now":
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> reservationDto.getCheckIn().equals(LocalDateTime.now()))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+            default:
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> (reservationDto.getCheckIn().equals(LocalDateTime.now())
+                                || (reservationDto.getCheckIn().isAfter(LocalDateTime.now()))))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+        }
+        return result;
     }
+
+
+    private List<ReservationDto> findAllReservationsDto() {
+        return reservationRepository.findAll().stream()
+                .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
     }
+}

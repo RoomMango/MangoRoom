@@ -34,7 +34,6 @@ public class ReservationController {
 
     @GetMapping("/reservations")
     public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
-
         return service.findAllWithTime(time);
     }
 

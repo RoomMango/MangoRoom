@@ -59,6 +59,18 @@ class ReservationServiceTest {
         assertEquals(allWithTime.size(), 2);
     }
 
+    @Test
+    void findAllWithTime_default() {
+        List<Reservation> reservationList = getReservationList();
+        when(repository.findAll()).thenReturn(reservationList);
+        String time = "";
+        List<ReservationDto> allWithTime = service.findAllWithTime(time);
+
+        assertEquals(repository.findAll().size(), 6);
+        assertNotNull(allWithTime);
+        assertEquals(allWithTime.size(), 5);
+    }
+
     private List<Reservation> getReservationList() {
         Reservation reservation1 = new Reservation(1L, LocalDateTime.now(), LocalDateTime.now().plusDays(2),
                 5, PaymentCurrency.PLN, true, true, Status.FINISHED_PAID,

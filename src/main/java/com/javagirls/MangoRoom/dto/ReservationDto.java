@@ -1,19 +1,28 @@
 package com.javagirls.MangoRoom.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
 import com.javagirls.MangoRoom.enumeration.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReservationDto {
 
     @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkIn;
 
     @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkOut;
 
     @NotBlank

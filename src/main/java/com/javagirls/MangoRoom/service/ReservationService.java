@@ -6,10 +6,12 @@ import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
-import com.javagirls.MangoRoom.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -19,12 +21,13 @@ public class ReservationService {
 
     private ReservationRepository reservationRepository;
     private ReservationMapper mapper;
-    private RoomRepository roomRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+
+    public ReservationService(ReservationRepository reservationRepository, ReservationMapper mapper) {
         this.reservationRepository = reservationRepository;
+        this.mapper = mapper;
     }
-    
+
     @Transactional
     public Reservation saveReservation(ReservationDto reservationDto) {
         Reservation reservation = mapper.map(reservationDto, Reservation.class);
@@ -49,4 +52,46 @@ public class ReservationService {
         findById(id).setStatus(status);
     }
 
+    public List<ReservationDto> findAllWithTime(String time) {
+        List<ReservationDto> result = new ArrayList<>();
+        switch (time) {
+            case "all":
+                findAllReservationsDto().stream().map(reservationDto -> result.add(reservationDto))
+                        .collect(Collectors.toList());
+                break;
+            case "future":
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
+                                .isAfter(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+            case "past":
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
+                                .isBefore(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+            case "now":
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
+                                .equals(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+            default:
+                findAllReservationsDto().stream()
+                        .filter(reservationDto -> (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
+                                .equals(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS))
+                                || (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
+                                .isAfter(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))))
+                        .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
+                break;
+        }
+        return result;
+    }
+
+
+    public List<ReservationDto> findAllReservationsDto() {
+        return reservationRepository.findAll().stream()
+                .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
+    }
 }

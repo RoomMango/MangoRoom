@@ -36,4 +36,5 @@ public class RoomController {
     public List<ReservationDto> getRoomReservationPlan(@PathVariable int id) {
         return service.getReservations(id);
     }
+
 }

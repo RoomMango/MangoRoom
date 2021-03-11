@@ -1,13 +1,16 @@
 package com.javagirls.MangoRoom.controller;
 
 import com.javagirls.MangoRoom.dto.ReservationDto;
+import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Reservation;
+import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.service.ReservationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,6 +38,12 @@ public class ReservationController {
     @GetMapping("/reservations")
     public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
         return service.findAllWithTime(time);
+    }
+
+    @GetMapping("/rooms/available")
+    public List<RoomDto> getAvailableRooms(@RequestParam(required = false) LocalDateTime startDate,
+                                           @RequestParam(required = false) LocalDateTime endDate){
+        return service.getFreeRooms(startDate, endDate);
     }
 
 }

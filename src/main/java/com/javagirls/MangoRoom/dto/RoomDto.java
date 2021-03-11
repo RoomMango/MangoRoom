@@ -1,5 +1,6 @@
 package com.javagirls.MangoRoom.dto;
 
+import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.enumeration.RoomType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,4 +29,5 @@ public class RoomDto {
     private boolean balcony;
     private RoomType roomType;
     private boolean isAvailableForBooking;
+    private List<Reservation> reservations;
 }

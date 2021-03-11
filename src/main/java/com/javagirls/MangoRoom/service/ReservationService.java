@@ -1,6 +1,7 @@
 package com.javagirls.MangoRoom.service;
 
 import com.javagirls.MangoRoom.dto.ReservationDto;
+import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.enumeration.Status;
@@ -21,6 +22,7 @@ public class ReservationService {
 
     private ReservationRepository reservationRepository;
     private ReservationMapper mapper;
+    private RoomService roomService;
 
 
     public ReservationService(ReservationRepository reservationRepository, ReservationMapper mapper) {
@@ -93,5 +95,26 @@ public class ReservationService {
     public List<ReservationDto> findAllReservationsDto() {
         return reservationRepository.findAll().stream()
                 .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
+    }
+
+    public List<RoomDto> getFreeRooms(LocalDateTime startDate, LocalDateTime endDate){
+        List<ReservationDto> reserved = new ArrayList<>();
+        List<RoomDto> available = new ArrayList<>();
+
+        findAllReservationsDto().stream()
+                .filter(reservationDto -> (reservationDto.getCheckOut().truncatedTo(ChronoUnit.DAYS)
+                        .isAfter(startDate.truncatedTo(ChronoUnit.DAYS))
+                        && (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
+                        .isBefore(endDate.truncatedTo(ChronoUnit.DAYS)))))
+                .map(reservationDto -> reserved.add(reservationDto)).collect(Collectors.toList());
+
+        List<RoomDto> allRooms = roomService.findAllRooms();
+        for(RoomDto room : allRooms){
+            if(!reserved.contains(room.getReservations())){
+                available.add(room);
+            }
+        }
+
+        return available;
     }
 }

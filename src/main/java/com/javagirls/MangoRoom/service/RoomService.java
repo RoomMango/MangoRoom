@@ -2,17 +2,15 @@ package com.javagirls.MangoRoom.service;
 
 import com.javagirls.MangoRoom.dto.ReservationDto;
 import com.javagirls.MangoRoom.dto.RoomDto;
-import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.exceptions.RoomNotFoundException;
 import com.javagirls.MangoRoom.mapper.RoomMapper;
 import com.javagirls.MangoRoom.repository.RoomRepository;
 import lombok.AllArgsConstructor;
-import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +52,7 @@ public class RoomService {
 
     public List<ReservationDto> getReservations(int roomNumber) {
         return reservationService.getRoomReservations(findById(roomNumber)).stream()
-                .filter((reservationDto) -> reservationDto.getCheckOut().compareTo(LocalDateTime.now()) > 0)
+                .filter((reservationDto) -> reservationDto.getCheckOut().compareTo(LocalDate.now()) > 0)
                 .collect(Collectors.toList());
     }
 

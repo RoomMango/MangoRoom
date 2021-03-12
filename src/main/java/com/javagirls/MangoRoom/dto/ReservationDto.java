@@ -8,14 +8,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationDto {
+  
+    private Long id;
 
     @NotBlank
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -25,7 +29,8 @@ public class ReservationDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkOut;
 
-    @NotBlank
+    @Min(1)
+    @Max(6)
     private Integer numberOfPeople;
 
     @NotBlank
@@ -38,4 +43,7 @@ public class ReservationDto {
     private Boolean paid;
 
     private Status status;
+
+    @NotBlank
+    private int roomId;
 }

@@ -4,8 +4,12 @@ import com.javagirls.MangoRoom.dto.ReservationDto;
 import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.enumeration.Status;
+import com.javagirls.MangoRoom.exceptions.NoReservationFoundException;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
+
+import com.javagirls.MangoRoom.repository.RoomRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,43 +17,51 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ReservationService {
 
     private ReservationRepository reservationRepository;
+    private RoomRepository roomRepository;
     private ReservationMapper mapper;
 
-
-    public ReservationService(ReservationRepository reservationRepository, ReservationMapper mapper) {
-        this.reservationRepository = reservationRepository;
-        this.mapper = mapper;
-    }
-
     @Transactional
-    public Reservation saveReservation(ReservationDto reservationDto) {
+    public Long saveReservation(ReservationDto reservationDto) {
+        Room room = roomRepository.getOne(reservationDto.getRoomId());
         Reservation reservation = mapper.map(reservationDto, Reservation.class);
-        return reservationRepository.save(reservation);
+        reservation.setRoom(room);
+        return reservationRepository.save(reservation).getId();
     }
 
-    @Transactional
+    public List<ReservationDto> getAllReservations() {
+        return reservationRepository.findAll().stream()
+                .map((reservation -> mapper.map(reservation, ReservationDto.class)))
+                .collect(Collectors.toList());
+    }
+
     public List<ReservationDto> getRoomReservations(Room room) {
         return reservationRepository.findByRoom(room)
-                .stream().map((reservation) -> mapper.map(reservation, ReservationDto.class))
+                .stream().map((reservation) -> {
+                    ReservationDto reservationDto = mapper.map(reservation, ReservationDto.class);
+                    reservationDto.setRoomId(room.getRoomNumber());
+                    return reservationDto;
+                })
                 .collect(Collectors.toList());
     }
 
     private Reservation findById(Long id) {
         return reservationRepository.findById(id).orElseThrow(() -> {
-            //fixme czy lepiej własne wyjątki?
-            throw new NoSuchElementException("No reservation with provided id found!");
+            throw new NoReservationFoundException(id);
         });
     }
 
-    public void changeReservationStatus(Long id, Status status) {
-        findById(id).setStatus(status);
+    @Transactional
+    public Status changeReservationStatus(Long id, Status status) {
+        Reservation reservation = findById(id);
+        reservation.setStatus(status);
+        return reservationRepository.save(reservation).getStatus();
     }
 
     public List<ReservationDto> findAllWithTime(String time) {
@@ -88,7 +100,6 @@ public class ReservationService {
         }
         return result;
     }
-
 
     public List<ReservationDto> findAllReservationsDto() {
         return reservationRepository.findAll().stream()

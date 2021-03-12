@@ -5,11 +5,10 @@ import com.javagirls.MangoRoom.enumeration.Status;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
-@Table(name = "reservation")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,10 +19,10 @@ public class Reservation {
     private Long id;
 
     @Column
-    private LocalDateTime checkIn;
+    private LocalDate checkIn;
 
     @Column
-    private LocalDateTime checkOut;
+    private LocalDate checkOut;
 
     @Column
     private Integer numberOfPeople;
@@ -37,9 +36,10 @@ public class Reservation {
     @Column
     private Boolean paid;
 
+    @Column
     private Status status;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     private Room room;
 
 

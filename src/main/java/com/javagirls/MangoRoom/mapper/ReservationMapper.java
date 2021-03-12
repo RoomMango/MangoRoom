@@ -11,6 +11,7 @@ public class ReservationMapper extends ConfigurableMapper {
 
     protected void configure(MapperFactory factory){
         factory.classMap(Reservation.class, ReservationDto.class)
+                .field("room.roomNumber", "roomId")
                 .byDefault()
                 .register();
     }

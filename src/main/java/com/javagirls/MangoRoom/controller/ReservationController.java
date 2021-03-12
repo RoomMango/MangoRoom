@@ -1,7 +1,5 @@
 package com.javagirls.MangoRoom.controller;
 
-import java.util.List;
-
 import com.javagirls.MangoRoom.dto.ReservationDto;
 
 import com.javagirls.MangoRoom.enumeration.Status;
@@ -23,16 +21,6 @@ public class ReservationController {
     @PostMapping(produces = "application/json")
     public Long addReservation(@RequestBody ReservationDto reservation) {
         return service.saveReservation(reservation);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Status> changeReservationStatus(@PathVariable Long id, @RequestParam Status status) {
-        return ResponseEntity.ok(service.changeReservationStatus(id, status));
-    }
-
-    @GetMapping("/reservations")
-    public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
-        return service.findAllWithTime(time);
     }
 
 }

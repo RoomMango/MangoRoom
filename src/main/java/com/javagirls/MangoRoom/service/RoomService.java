@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,7 @@ public class RoomService {
 
     public List<ReservationDto> getReservations(int roomNumber) {
         return reservationService.getRoomReservations(findById(roomNumber)).stream()
-                .filter((reservationDto) -> reservationDto.getCheckOut().compareTo(LocalDate.now()) > 0)
+                .filter((reservationDto) -> reservationDto.getCheckOut().compareTo(LocalDateTime.now()) > 0)
                 .collect(Collectors.toList());
     }
 

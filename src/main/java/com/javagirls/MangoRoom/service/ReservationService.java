@@ -5,6 +5,7 @@ import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.exceptions.NoReservationFoundException;
+import com.javagirls.MangoRoom.exceptions.RoomBookedException;
 import com.javagirls.MangoRoom.exceptions.RoomNotFoundException;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
@@ -26,20 +27,26 @@ public class ReservationService {
 
 	private ReservationRepository reservationRepository;
 
-	private RoomRepository roomRepository;
+	private RoomService roomService;
 
 	private ReservationMapper mapper;
 
 	@Transactional
 	public Reservation saveReservation(ReservationDto reservationDto) {
-		if (roomRepository.findById(reservationDto.getRoomId()).isPresent()) {
-			Room room = roomRepository.getOne(reservationDto.getRoomId());
+		int roomId = reservationDto.getRoomId();
+
+		if (checkRoomAvailability(roomId)) {
+			Room room = roomService.findById(roomId);
 			Reservation reservation = mapper.map(reservationDto, Reservation.class);
 			reservation.setRoom(room);
 			return reservationRepository.save(reservation);
 		} else {
-			throw new RoomNotFoundException(reservationDto.getRoomId());
+			throw new RoomBookedException(roomId);
 		}
+	}
+
+	private boolean checkRoomAvailability(int roomId) {
+		return roomService.findById(roomId).isAvailableForBooking();
 	}
 
 	public List<ReservationDto> getRoomReservations(Room room) {

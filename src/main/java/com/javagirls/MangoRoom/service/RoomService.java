@@ -45,7 +45,7 @@ public class RoomService {
         return mapper.map(room, RoomDto.class);
     }
 
-    private Room findById (int roomNumber) {
+    public Room findById (int roomNumber) {
         return roomRepository.findById(roomNumber).orElseThrow(() -> {
             throw new RoomNotFoundException(roomNumber);
         });

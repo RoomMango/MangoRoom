@@ -57,4 +57,9 @@ public class RoomService {
                 .collect(Collectors.toList());
     }
 
+    public void removeRoom(int roomNumber) {
+        Room room = findById(roomNumber);
+        roomRepository.delete(room);
+    }
+
 }

@@ -34,7 +34,7 @@ class RoomServiceTest {
         room.setPrice(new BigDecimal(200.00));
         when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
         RoomDto roomDTO = service.changeRoomStatus(room.getRoomNumber());
-        assertThat(roomDTO.isAvailableForBooking()).isEqualTo(false);
+        assertThat(roomDTO.isAvailable()).isEqualTo(false);
     }
 
     @Test
@@ -45,7 +45,7 @@ class RoomServiceTest {
         room.setPrice(new BigDecimal(200.00));
         when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
         RoomDto roomDTO = service.changeRoomStatus(room.getRoomNumber());
-        assertThat(roomDTO.isAvailableForBooking()).isEqualTo(true);
+        assertThat(roomDTO.isAvailable()).isEqualTo(true);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.javagirls.MangoRoom.service;
 
 import com.javagirls.MangoRoom.dto.ReservationDto;
+import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.entity.Room;
 import com.javagirls.MangoRoom.enumeration.Status;
@@ -10,8 +11,8 @@ import com.javagirls.MangoRoom.exceptions.RoomNotFoundException;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
 
-import com.javagirls.MangoRoom.repository.RoomRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,33 +23,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ReservationService {
 
+	@Autowired
 	private ReservationRepository reservationRepository;
 
-	private RoomService roomService;
-
+	@Autowired
 	private ReservationMapper mapper;
 
+	@Autowired
+	private RoomService roomService;
+
 	@Transactional
-	public Reservation saveReservation(ReservationDto reservationDto) {
+	public Long saveReservation(ReservationDto reservationDto) {
 		//FIXME zapętlenie
 		int roomId = reservationDto.getRoomId();
-
-		if (checkRoomAvailability(roomId)) {
 			Room room = roomService.findById(roomId);
 			Reservation reservation = mapper.map(reservationDto, Reservation.class);
 			reservation.setRoom(room);
-			return reservationRepository.save(reservation);
-		} else {
-			throw new RoomBookedException(roomId);
-		}
+			return reservationRepository.save(reservation).getId();
+
 	}
 
-	private boolean checkRoomAvailability(int roomId) {
-		return roomService.findById(roomId).isAvailableForBooking();
-	}
 
 	public List<ReservationDto> getRoomReservations(Room room) {
 		return reservationRepository.findByRoom(room)
@@ -114,4 +111,5 @@ public class ReservationService {
 		return reservationRepository.findAll().stream()
 				.map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
 	}
+
 }

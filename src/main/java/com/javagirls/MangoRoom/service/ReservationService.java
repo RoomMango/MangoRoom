@@ -33,6 +33,7 @@ public class ReservationService {
 
 	@Transactional
 	public Reservation saveReservation(ReservationDto reservationDto) {
+		//FIXME zapętlenie
 		int roomId = reservationDto.getRoomId();
 
 		if (checkRoomAvailability(roomId)) {

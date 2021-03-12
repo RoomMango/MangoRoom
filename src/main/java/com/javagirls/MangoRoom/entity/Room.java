@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,8 +39,8 @@ public class Room {
     @Column(name = "room_type")
     private RoomType roomType;
 
-    @OneToMany
-    private List<Reservation> reservations;
+    @OneToMany (mappedBy = "room")
+    private List<Reservation> reservations = new ArrayList<>();
 
     private boolean isAvailableForBooking;
 }

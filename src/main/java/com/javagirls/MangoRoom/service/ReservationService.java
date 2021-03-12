@@ -9,12 +9,10 @@ import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
 import com.javagirls.MangoRoom.repository.RoomRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,12 +24,11 @@ public class ReservationService {
     private ReservationMapper mapper;
 
     @Transactional
-    public Reservation saveReservation(ReservationDto reservationDto) {
-        //FIXME wyszukiwanie i dodawanie pokoju po id
-//        Room room = roomRepository.getOne(reservationDto.getRoomId());
+    public Long saveReservation(ReservationDto reservationDto) {
+        Room room = roomRepository.getOne(reservationDto.getRoomId());
         Reservation reservation = mapper.map(reservationDto, Reservation.class);
-//        reservation.setRoom(room);
-        return reservationRepository.save(reservation);
+        reservation.setRoom(room);
+        return reservationRepository.save(reservation).getId();
     }
 
     public List<ReservationDto> getAllReservations() {
@@ -56,9 +53,11 @@ public class ReservationService {
         });
     }
 
-    public void changeReservationStatus(Long id, Status status) {
-        //FIXME
-        findById(id).setStatus(status);
+    @Transactional
+    public Status changeReservationStatus(Long id, Status status) {
+        Reservation reservation = findById(id);
+        reservation.setStatus(status);
+        return reservationRepository.save(reservation).getStatus();
     }
 
 }

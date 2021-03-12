@@ -39,7 +39,7 @@ public class Reservation {
     @Column
     private Status status;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     private Room room;
 
 

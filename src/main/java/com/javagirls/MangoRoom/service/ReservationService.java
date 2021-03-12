@@ -68,29 +68,29 @@ public class ReservationService {
         List<ReservationDto> result = new ArrayList<>();
         switch (time) {
             case "all":
-                findAllReservationsDto().stream().map(reservationDto -> result.add(reservationDto))
+                getAllReservations().stream().map(reservationDto -> result.add(reservationDto))
                         .collect(Collectors.toList());
                 break;
             case "future":
-                findAllReservationsDto().stream()
+                getAllReservations().stream()
                         .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
                                 .isAfter(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
                         .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
                 break;
             case "past":
-                findAllReservationsDto().stream()
+                getAllReservations().stream()
                         .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
                                 .isBefore(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
                         .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
                 break;
             case "now":
-                findAllReservationsDto().stream()
+                getAllReservations().stream()
                         .filter(reservationDto -> reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
                                 .equals(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS)))
                         .map(reservationDto -> result.add(reservationDto)).collect(Collectors.toList());
                 break;
             default:
-                findAllReservationsDto().stream()
+                getAllReservations().stream()
                         .filter(reservationDto -> (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
                                 .equals(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS))
                                 || (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
@@ -101,8 +101,4 @@ public class ReservationService {
         return result;
     }
 
-    public List<ReservationDto> findAllReservationsDto() {
-        return reservationRepository.findAll().stream()
-                .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
-    }
 }

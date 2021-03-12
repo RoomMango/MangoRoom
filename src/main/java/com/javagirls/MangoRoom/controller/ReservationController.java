@@ -1,7 +1,5 @@
 package com.javagirls.MangoRoom.controller;
 
-import java.util.List;
-
 import com.javagirls.MangoRoom.dto.ReservationDto;
 
 import com.javagirls.MangoRoom.enumeration.Status;
@@ -9,7 +7,7 @@ import com.javagirls.MangoRoom.service.ReservationService;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
@@ -30,7 +28,7 @@ public class ReservationController {
         return ResponseEntity.ok(service.changeReservationStatus(id, status));
     }
 
-    @GetMapping("/reservations")
+    @GetMapping()
     public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
         return service.findAllWithTime(time);
     }

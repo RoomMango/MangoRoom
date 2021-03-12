@@ -1,11 +1,14 @@
 package com.javagirls.MangoRoom.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
 import com.javagirls.MangoRoom.enumeration.Status;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -19,10 +22,12 @@ public class Reservation {
     private Long id;
 
     @Column
-    private LocalDate checkIn;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime checkIn;
 
     @Column
-    private LocalDate checkOut;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime checkOut;
 
     @Column
     private Integer numberOfPeople;
@@ -39,7 +44,7 @@ public class Reservation {
     @Column
     private Status status;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
 

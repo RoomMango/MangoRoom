@@ -2,7 +2,6 @@ package com.javagirls.MangoRoom.controller;
 
 import com.javagirls.MangoRoom.entity.Guest;
 import com.javagirls.MangoRoom.service.GuestService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

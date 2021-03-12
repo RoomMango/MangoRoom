@@ -1,6 +1,5 @@
 package com.javagirls.MangoRoom.mock;
 
-
 import com.javagirls.MangoRoom.entity.Room;
 
 

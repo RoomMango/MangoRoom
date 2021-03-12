@@ -5,7 +5,7 @@ import com.javagirls.MangoRoom.enumeration.Status;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -19,10 +19,10 @@ public class Reservation {
     private Long id;
 
     @Column
-    private LocalDate checkIn;
+    private LocalDateTime checkIn;
 
     @Column
-    private LocalDate checkOut;
+    private LocalDateTime checkOut;
 
     @Column
     private Integer numberOfPeople;

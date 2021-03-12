@@ -17,7 +17,6 @@ public class ReservationMapperTest {
 
         final ReservationDto reservationDto = reservationMapper.map(reservation, ReservationDto.class);
 
-//        assert(reservation.getId().equals(reservationDto.getId()));
         assert(reservation.getCheckIn().equals(reservationDto.getCheckIn()));
         assert(reservation.getCheckOut().equals(reservationDto.getCheckOut()));
     }
@@ -30,7 +29,6 @@ public class ReservationMapperTest {
 
         final Reservation reservation = reservationMapper.map(reservationDto, Reservation.class);
 
-//        assert(reservationDto.getId().equals(reservation.getId()));
         assert(reservationDto.getCheckIn().equals(reservation.getCheckIn()));
         assert(reservationDto.getCheckOut().equals(reservation.getCheckOut()));
     }

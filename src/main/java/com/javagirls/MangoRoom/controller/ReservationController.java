@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.javagirls.MangoRoom.dto.ReservationDto;
 
+import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.service.ReservationService;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class ReservationController {
     }
 
     @PostMapping(produces = "application/json")
-    public Long addReservation(@RequestBody ReservationDto reservation) {
-        return service.saveReservation(reservation);
+    public ResponseEntity<Reservation> addReservation(@RequestBody ReservationDto reservation) {
+        return ResponseEntity.ok(service.saveReservation(reservation));
     }
 
     @PutMapping("/{id}")
@@ -30,7 +31,7 @@ public class ReservationController {
         return ResponseEntity.ok(service.changeReservationStatus(id, status));
     }
 
-    @GetMapping("/reservations")
+    @GetMapping
     public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
         return service.findAllWithTime(time);
     }

@@ -1,8 +1,12 @@
 package com.javagirls.MangoRoom.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
 import com.javagirls.MangoRoom.enumeration.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -10,14 +14,20 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReservationDto {
-
+  
     private Long id;
 
     @NotBlank
-    private LocalDate checkIn;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime checkIn;
 
-    private LocalDate checkOut;
+    @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime checkOut;
 
     @Min(1)
     @Max(6)

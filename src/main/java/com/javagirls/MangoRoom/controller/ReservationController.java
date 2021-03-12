@@ -25,15 +25,14 @@ public class ReservationController {
         return service.saveReservation(reservation);
     }
 
-    @GetMapping
-    public List<ReservationDto> getAllReservations() {
-        return service.getAllReservations();
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Status> changeReservationStatus(@PathVariable Long id, @RequestParam Status status) {
         return ResponseEntity.ok(service.changeReservationStatus(id, status));
     }
 
+    @GetMapping("/reservations")
+    public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
+        return service.findAllWithTime(time);
+    }
 
 }

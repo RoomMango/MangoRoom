@@ -1,13 +1,11 @@
 package com.javagirls.MangoRoom.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
 import com.javagirls.MangoRoom.enumeration.Status;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

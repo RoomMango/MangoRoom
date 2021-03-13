@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,15 +38,15 @@ public class RoomService {
 
     public RoomDto changeRoomStatus(int id) {
         Room room = roomRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("This room is not found"));
+                .orElseThrow(() -> new RoomNotFoundException(id));
         room.setAvailableForBooking(!room.isAvailableForBooking());
         roomRepository.save(room);
         return mapper.map(room, RoomDto.class);
     }
 
-    private Room findById (int roomNumber) {
+    public Room findById (int roomNumber) {
         return roomRepository.findById(roomNumber).orElseThrow(() -> {
-            throw new RoomNotFoundException();
+            throw new RoomNotFoundException(roomNumber);
         });
     }
 
@@ -55,6 +54,11 @@ public class RoomService {
         return reservationService.getRoomReservations(findById(roomNumber)).stream()
                 .filter((reservationDto) -> reservationDto.getCheckOut().compareTo(LocalDateTime.now()) > 0)
                 .collect(Collectors.toList());
+    }
+
+    public void removeRoom(int roomNumber) {
+        Room room = findById(roomNumber);
+        roomRepository.delete(room);
     }
 
 }

@@ -2,26 +2,20 @@ package com.javagirls.MangoRoom.service;
 
 import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Room;
-import com.javagirls.MangoRoom.mapper.RoomMapper;
-import com.javagirls.MangoRoom.mock.RoomDtoMock;
 import com.javagirls.MangoRoom.mock.RoomMock;
 import com.javagirls.MangoRoom.repository.RoomRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -40,7 +34,7 @@ class RoomServiceTest {
         room.setPrice(new BigDecimal(200.00));
         when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
         RoomDto roomDTO = service.changeRoomStatus(room.getRoomNumber());
-        assertThat(roomDTO.isAvailableForBooking()).isEqualTo(false);
+        assertThat(roomDTO.isAvailable()).isEqualTo(false);
     }
 
     @Test
@@ -51,7 +45,7 @@ class RoomServiceTest {
         room.setPrice(new BigDecimal(200.00));
         when(repository.findById(room.getRoomNumber())).thenReturn(java.util.Optional.of(room));
         RoomDto roomDTO = service.changeRoomStatus(room.getRoomNumber());
-        assertThat(roomDTO.isAvailableForBooking()).isEqualTo(true);
+        assertThat(roomDTO.isAvailable()).isEqualTo(true);
     }
 
     @Test

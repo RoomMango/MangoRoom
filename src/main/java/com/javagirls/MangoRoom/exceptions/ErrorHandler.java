@@ -23,6 +23,11 @@ public class ErrorHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(RoomBookedException.class)
+    public ResponseEntity<Object> invalidRoomNumberException(RoomBookedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 
 
 }

@@ -1,6 +1,5 @@
 package com.javagirls.MangoRoom.entity;
 
-
 import lombok.Data;
 
 import javax.persistence.*;

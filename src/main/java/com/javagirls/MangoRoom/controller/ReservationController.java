@@ -1,36 +1,49 @@
 package com.javagirls.MangoRoom.controller;
 
-import com.javagirls.MangoRoom.dto.ReservationDto;
+import javax.validation.Valid;
+import java.util.List;
 
+import com.javagirls.MangoRoom.dto.ReservationDto;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.service.ReservationService;
+import com.javagirls.MangoRoom.validation.ReservationValidator;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.validation.DataBinder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+@Validated
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
 
-    private ReservationService service;
+	private final ReservationService service;
 
-    public ReservationController(ReservationService service) {
-        this.service = service;
-    }
+	private final ReservationValidator validator;
 
-    @PostMapping(produces = "application/json")
-    public Long addReservation(@RequestBody ReservationDto reservation) {
-        return service.saveReservation(reservation);
-    }
+//	@InitBinder
+//	public void initPetBinder(DataBinder dataBinder) {
+//		dataBinder.addValidators(validator);
+//	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Status> changeReservationStatus(@PathVariable Long id, @RequestParam Status status) {
-        return ResponseEntity.ok(service.changeReservationStatus(id, status));
-    }
+	public ReservationController(ReservationService service,
+			ReservationValidator validator) {
+		this.service = service;
+		this.validator = validator;
+	}
 
-    @GetMapping()
-    public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
-        return service.findAllWithTime(time);
-    }
+	@PostMapping(produces = "application/json")
+	public ResponseEntity<Long> addReservation(/*@Valid*/ @RequestBody ReservationDto reservation) {
+		return ResponseEntity.ok(service.saveReservation(reservation));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Status> changeReservationStatus(@PathVariable Long id, @RequestParam Status status) {
+		return ResponseEntity.ok(service.changeReservationStatus(id, status));
+	}
+
+	public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
+		return service.findAllWithTime(time);
+	}
 
 }

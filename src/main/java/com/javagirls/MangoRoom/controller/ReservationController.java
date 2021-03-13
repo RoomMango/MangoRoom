@@ -42,6 +42,7 @@ public class ReservationController {
 		return ResponseEntity.ok(service.changeReservationStatus(id, status));
 	}
 
+	@GetMapping
 	public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
 		return service.findAllWithTime(time);
 	}

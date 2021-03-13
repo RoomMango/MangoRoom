@@ -1,13 +1,9 @@
 package com.javagirls.MangoRoom.controller;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.javagirls.MangoRoom.dto.ReservationDto;
-
-import com.javagirls.MangoRoom.dto.RoomDto;
-import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.service.ReservationService;
 import com.javagirls.MangoRoom.validation.ReservationValidator;
@@ -46,7 +42,6 @@ public class ReservationController {
 		return ResponseEntity.ok(service.changeReservationStatus(id, status));
 	}
 
-	@GetMapping
 	public List<ReservationDto> allReservations(@RequestParam(required = false) String time) {
 		return service.findAllWithTime(time);
 	}

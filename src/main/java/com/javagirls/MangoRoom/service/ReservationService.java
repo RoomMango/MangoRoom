@@ -116,5 +116,4 @@ public class ReservationService {
 		return reservationRepository.findAll().stream()
 				.map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
 	}
-
 }

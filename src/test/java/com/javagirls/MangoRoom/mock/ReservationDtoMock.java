@@ -14,8 +14,8 @@ public class ReservationDtoMock {
 
         ReservationDto reservationDto = new ReservationDto();
 
-        reservationDto.setCheckIn(LocalDateTime.now());
-        reservationDto.setCheckOut(LocalDateTime.now());
+        reservationDto.setCheckIn(LocalDateTime.of(2021, 3, 13, 15, 0, 0));
+        reservationDto.setCheckOut(LocalDateTime.of(2021, 3, 16, 12, 0, 0));
         reservationDto.setPaid(true);
 
         return reservationDto;

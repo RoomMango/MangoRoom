@@ -1,5 +1,6 @@
 package com.javagirls.MangoRoom.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.javagirls.MangoRoom.enumeration.PaymentCurrency;
 import com.javagirls.MangoRoom.enumeration.Status;
 import lombok.*;
@@ -19,9 +20,11 @@ public class Reservation {
     private Long id;
 
     @Column
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkIn;
 
     @Column
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkOut;
 
     @Column
@@ -39,7 +42,7 @@ public class Reservation {
     @Column
     private Status status;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
 

@@ -11,7 +11,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Builder
@@ -29,5 +28,4 @@ public class RoomDto {
     private boolean balcony;
     private RoomType roomType;
     private boolean isAvailable;
-
 }

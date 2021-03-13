@@ -1,10 +1,12 @@
 package com.javagirls.MangoRoom.controller;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.javagirls.MangoRoom.dto.ReservationDto;
 
+import com.javagirls.MangoRoom.dto.RoomDto;
 import com.javagirls.MangoRoom.entity.Reservation;
 import com.javagirls.MangoRoom.enumeration.Status;
 import com.javagirls.MangoRoom.service.ReservationService;
@@ -23,10 +25,10 @@ public class ReservationController {
 
 	private final ReservationValidator validator;
 
-	@InitBinder
-	public void initPetBinder(DataBinder dataBinder) {
-		dataBinder.addValidators(validator);
-	}
+//	@InitBinder
+//	public void initPetBinder(DataBinder dataBinder) {
+//		dataBinder.addValidators(validator);
+//	}
 
 	public ReservationController(ReservationService service,
 			ReservationValidator validator) {
@@ -35,7 +37,7 @@ public class ReservationController {
 	}
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<Long> addReservation(@Valid @RequestBody ReservationDto reservation) {
+	public ResponseEntity<Long> addReservation(/*@Valid*/ @RequestBody ReservationDto reservation) {
 		return ResponseEntity.ok(service.saveReservation(reservation));
 	}
 

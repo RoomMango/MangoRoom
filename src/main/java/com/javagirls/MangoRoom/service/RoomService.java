@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +38,7 @@ public class RoomService {
 
     public RoomDto changeRoomStatus(int id) {
         Room room = roomRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("This room is not found"));
+                .orElseThrow(() -> new RoomNotFoundException(id));
         room.setAvailableForBooking(!room.isAvailableForBooking());
         roomRepository.save(room);
         return mapper.map(room, RoomDto.class);

@@ -21,7 +21,6 @@ import java.util.List;
 public class Room {
 
     @Id
-    @UniqueElements
     private int roomNumber;
     private int beds;
 

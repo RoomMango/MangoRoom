@@ -20,29 +20,30 @@ import java.time.LocalDateTime;
 public class ReservationDto {
 
     private Long id;
-//    @NotBlank
+
+    @NotBlank
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkIn;
 
-//    @NotBlank
+    @NotBlank
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkOut;
 
-//    @Min(1)
-//    @Max(6)
+    @Min(1)
+    @Max(6)
     private Integer numberOfPeople;
 
-//    @NotBlank
+    @NotBlank
     private PaymentCurrency paymentCurrency;
 
-//    @NotBlank
+    @NotBlank
     private Boolean businessTrip;
 
-//    @NotBlank
+    @NotBlank
     private Boolean paid;
 
     private Status status;
 
-//    @NotBlank
+    @NotBlank
     private int roomId;
 }

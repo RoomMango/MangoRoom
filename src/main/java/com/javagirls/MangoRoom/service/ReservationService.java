@@ -11,12 +11,14 @@ import com.javagirls.MangoRoom.exceptions.RoomNotFoundException;
 import com.javagirls.MangoRoom.mapper.ReservationMapper;
 import com.javagirls.MangoRoom.repository.ReservationRepository;
 
+import com.javagirls.MangoRoom.repository.RoomRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,9 @@ public class ReservationService {
 	private ReservationRepository reservationRepository;
 
 	@Autowired
+	private RoomRepository roomRepository;
+
+	@Autowired
 	private ReservationMapper mapper;
 
 	@Autowired
@@ -37,15 +42,15 @@ public class ReservationService {
 
 	@Transactional
 	public Long saveReservation(ReservationDto reservationDto) {
-		//FIXME zapętlenie
 		int roomId = reservationDto.getRoomId();
-			Room room = roomService.findById(roomId);
-			Reservation reservation = mapper.map(reservationDto, Reservation.class);
-			reservation.setRoom(room);
-			return reservationRepository.save(reservation).getId();
+		Room room = roomService.findById(roomId);
+		roomService.changeRoomStatus(roomId);
+
+		Reservation reservation = mapper.map(reservationDto, Reservation.class);
+		reservation.setRoom(room);
+		return reservationRepository.save(reservation).getId();
 
 	}
-
 
 	public List<ReservationDto> getRoomReservations(Room room) {
 		return reservationRepository.findByRoom(room)

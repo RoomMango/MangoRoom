@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +59,26 @@ public class RoomService {
         return reservationService.getRoomReservations(findById(roomNumber)).stream()
                 .filter((reservationDto) -> reservationDto.getCheckOut().compareTo(LocalDateTime.now()) > 0)
                 .collect(Collectors.toList());
+    }
+
+    public List<RoomDto> findFreeRooms(String start, String end) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDate = LocalDateTime.parse(start + " 10:00:00", formatter);
+        LocalDateTime endDate = LocalDateTime.parse(end + " 10:00:00", formatter);
+
+        List<Integer> reserved = reservationService.findAllReservationsDto().stream()
+                .filter(reservationDto -> (reservationDto.getCheckOut().truncatedTo(ChronoUnit.DAYS)
+                        .isAfter(startDate.truncatedTo(ChronoUnit.DAYS))
+                        && (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
+                        .isBefore(endDate.truncatedTo(ChronoUnit.DAYS)))))
+                .map(reservationDto -> reservationDto.getRoom().getRoomNumber())
+                .collect(Collectors.toList());
+
+        List<RoomDto> allRooms = findAllRooms();
+
+        allRooms.removeIf(room -> (reserved.contains(room.getRoomNumber())));
+
+        return allRooms;
     }
 
 }

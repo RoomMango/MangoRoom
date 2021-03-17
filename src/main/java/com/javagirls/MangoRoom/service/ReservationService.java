@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,24 +98,5 @@ public class ReservationService {
                 .map((reservation) -> mapper.map(reservation, ReservationDto.class)).collect(Collectors.toList());
     }
 
-    public List<RoomDto> getFreeRooms(LocalDateTime startDate, LocalDateTime endDate){
-        List<ReservationDto> reserved = new ArrayList<>();
-        List<RoomDto> available = new ArrayList<>();
 
-        findAllReservationsDto().stream()
-                .filter(reservationDto -> (reservationDto.getCheckOut().truncatedTo(ChronoUnit.DAYS)
-                        .isAfter(startDate.truncatedTo(ChronoUnit.DAYS))
-                        && (reservationDto.getCheckIn().truncatedTo(ChronoUnit.DAYS)
-                        .isBefore(endDate.truncatedTo(ChronoUnit.DAYS)))))
-                .map(reservationDto -> reserved.add(reservationDto)).collect(Collectors.toList());
-
-        List<RoomDto> allRooms = roomService.findAllRooms();
-        for(RoomDto room : allRooms){
-            if(!reserved.contains(room.getReservations())){
-                available.add(room);
-            }
-        }
-
-        return available;
-    }
 }

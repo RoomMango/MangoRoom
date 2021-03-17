@@ -37,4 +37,9 @@ public class RoomController {
         return service.getReservations(id);
     }
 
+    @GetMapping("/rooms/available")
+    public List<RoomDto> getFreeRooms(@RequestParam String startDate, @RequestParam String endDate){
+        return service.findFreeRooms(startDate, endDate);
+    }
+
 }

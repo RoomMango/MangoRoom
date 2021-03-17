@@ -70,4 +70,20 @@ class RoomServiceTest {
         assertNotNull(roomDtos);
         assertEquals(roomsMock.size(), roomDtos.size());
     }
+
+    @Test
+    //nie działa :(
+    void findFreeRooms_should_return_roomDto_list(){
+        Room freeRoom = RoomMock.getBasicRoom();
+        Room bookedRoom = RoomMock.getReservedRoom();
+        List<Room> rooms = Arrays.asList(freeRoom, bookedRoom);
+
+        //czy ta część jest ok?
+        when(repository.findAll()).thenReturn(rooms);
+
+        List<RoomDto> roomDtos = service.findFreeRooms("2021-03-13", "2021-03-15");
+
+        assertNotNull(roomDtos);
+        assertEquals(1, roomDtos.size());
+    }
 }

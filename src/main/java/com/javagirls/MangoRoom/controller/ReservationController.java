@@ -40,10 +40,4 @@ public class ReservationController {
         return service.findAllWithTime(time);
     }
 
-    @GetMapping("/rooms/available")
-    public List<RoomDto> getAvailableRooms(@RequestParam(required = false) LocalDateTime startDate,
-                                           @RequestParam(required = false) LocalDateTime endDate){
-        return service.getFreeRooms(startDate, endDate);
-    }
-
 }
